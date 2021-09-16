@@ -6,13 +6,14 @@ var logger = require('morgan');
 
 // var indexRouter = require('./web_server/routes/index');
 // var usersRouter = require('./web_server/routes/users');
+
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'apps_server', 'views'));
+app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
