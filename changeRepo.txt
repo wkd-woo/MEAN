@@ -1,0 +1,4 @@
+저장소 위치 확인 : git remote -v  
+
+heroku : git push heroku master
+heroku open
