@@ -136,7 +136,7 @@ const reviewsUpdateOne = (req, res) => {
             .status(404)
             .json({
                 "message": "Not found, locationid and reviewid are both required"
-            });
+            });``
     }
     Loc
         .findById(req.params.locationid)
