@@ -1,3 +1,6 @@
+const {
+    response
+} = require('express');
 const request = require('request');
 
 const apiOptions = {
@@ -14,9 +17,9 @@ const homeList = (req, res) => {
         method: 'GET',
         json: {},
         qs: {
-            lng: 1,
-            lat: 1,
-            maxDistance: 0.002
+            lng: 127.0010,
+            lat: 37.2501,
+            maxDistance: 2000000
         }
     };
     request(
@@ -71,59 +74,64 @@ const renderHomepage = (req, res, responseBody) => {
     });
 };
 
-/* GET 'Location Info' page */
-const locationInfo = (req, res) => {
+const renderDetailPage = function (req, res, location) {
     res.render('location-info', {
-        title: 'Location Info',
+        title: location.name,
         pageHeader: {
-            title: 'Loc8r',
+            title: location.name
         },
         sidebar: {
-            context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
-            callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
+            context: 'is on Loc8r because it has accessible wifi and \
+                space to sit down with your laptop and get some work done. 2017265104 장재영',
+            callToAction: "If you've been and you like it - or if you don't\
+                - please leave a review to help other people just like you. 2017265104 장재영"
         },
-        location: {
-            name: 'Starcups',
-            address: '경기도 수원시 권선구',
-            rating: 3,
-            facilities: ['Hot drinks', 'Food', 'Premium wifi'],
-            coords: {
-                lat: 37.2597,
-                lng: 127.0089
-            },
-            openingTimes: [{
-                    days: 'Monday - Friday',
-                    opening: '7:00am',
-                    closing: '7:00pm',
-                    closed: false
-                },
-                {
-                    days: 'Saturday',
-                    opening: '8:00am',
-                    closing: '5:00pm',
-                    closed: false
-                },
-                {
-                    days: 'Sunday',
-                    closed: true
-                }
-            ],
-            reviews: [{
-                    author: 'Simon Holmes',
-                    rating: 5,
-                    timestamp: '16 July 2013',
-                    reviewText: 'What a great place. I can\'t say enough good things about it.'
-                },
-                {
-                    author: 'Charlie Chaplin',
-                    rating: 3,
-                    timestamp: '16 June 2013',
-                    reviewText: 'It was okay. Coffee wasn\'t great, but the wifi was fast.'
-                }
-            ]
-        }
+        location
     });
-}
+};
+
+/* GET 'Location Info' page */
+const locationInfo = (req, res) => {
+    const path = `/api/locations/${req.params.locationid}`;
+    const requestOptions = {
+        url: `${apiOptions.server}${path}`,
+        method: 'GET',
+        json: {}
+    };
+    request(
+        requestOptions,
+        (err, response, body) => {
+            const data = body;
+            if (response.statusCode === 200) {
+                data.coords = {
+                    lng: body.coords[0],
+                    lat: body.coords[1]
+                };
+                renderDetailPage(req, res, data);
+            } else {
+                showError(req, res, response.statusCode);
+            }
+
+        }
+    );
+};
+
+const showError = (req, res, status) => {
+    let title = '404, page not found';
+    let content = '';
+    if (status === 404) {
+        content = 'Oh dear. Looks like you can\'t find this page. Sorry - 2017265104 장재영'
+    }
+    else {
+        title = `{status}, something's gone wrong`;
+        content = 'Something, somewhere, has gone just a little bit wrong.';
+    }
+    res.status(status);
+    res.render('generic-text', {
+        title,
+        content
+    });
+};
 
 /* GET 'Add Review' page */
 const addReview = function (req, res) {
