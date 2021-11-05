@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 var gracefulShutdown;
-const dbURI = 'mongodb://localhost/Loc8r';
+// const dbURI = 'mongodb://localhost/Loc8r';
+const dbURI = 'mongodb+srv://my_atlas_user:qlalfqjsgh@cluster0.qxtit.mongodb.net/Loc8r'
+
 mongoose.connect(dbURI, {
     useNewUrlParser: true
 });
