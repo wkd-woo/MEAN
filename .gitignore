@@ -66,3 +66,6 @@ typings/
 
 # changing git repository
 .changeRepo
+
+#
+app_public/node_modules

@@ -17,9 +17,10 @@
     "http-errors": "~1.6.3",
     "mongoose": "^6.0.8",
     "morgan": "~1.9.1",
+    "ng": "0.0.0",
+    "nodemon": "2.0.14",
     "pug": "2.0.0-beta11",
-    "request": "^2.88.2",
-    "nodemon": "2.0.14"
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
