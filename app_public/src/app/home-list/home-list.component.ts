@@ -20,10 +20,12 @@ export class HomeListComponent implements OnInit {
   public locations: Location[];
 
   private getLocations(): void {
-    this.loc8rDataService.getLocations().then(foundLocations => this.locations = foundLocations);
+    this.loc8rDataService
+      .getLocations()
+        .then(foundLocations => this.locations = foundLocations);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getLocations();
   }
 }

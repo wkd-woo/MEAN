@@ -1,18 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HomeListComponent } from './home-list/home-list.component';
+import { Component } from '@angular/core';
 
-import { DistancePipe } from './distance.pipe'
-
-@NgModule({
-  declarations: [
-    HomeListComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [HomeListComponent]
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-
-export class AppModule {}
+export class AppComponent {
+  title = 'loc8r-public';
+}
