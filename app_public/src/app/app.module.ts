@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { HtmlLineBreaksPipe } from './html-line-breaks.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AboutComponent,
     HomepageComponent,
     PageHeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    HtmlLineBreaksPipe
   ],
   imports: [
     BrowserModule,
