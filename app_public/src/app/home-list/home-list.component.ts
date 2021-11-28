@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Loc8rDataService } from '../loc8r-data.service';
 import { GeolocationService } from '../geolocation.service';
-
 import { Location } from '../location';
 
 @Component({

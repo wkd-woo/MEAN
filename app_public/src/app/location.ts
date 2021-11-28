@@ -1,4 +1,4 @@
-class openingTimes {
+class OpeningTimes {
     days: string;
     opening: string;
     closing: string;
@@ -12,13 +12,13 @@ export class Review {
 }
 
 export class Location {
-  _id!: string;
-  name!: string;
-  distance!: number;
-  address!: string;
-  rating!: number;
-  facilities!: string[];
-  reviews: any[];
-  coords: number[];
-  openingTimes: any[];
+    _id!: string;
+    name!: string;
+    distance!: number;
+    address!: string;
+    rating!: number;
+    facilities!: string[];
+    reviews: Review[];
+    coords: number[];
+    openingTimes: OpeningTimes[];
 }
