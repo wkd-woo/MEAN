@@ -1,6 +1,38 @@
 const mongoose = require('mongoose');
 const Loc = mongoose.model('Location');
 
+const User = mongoose.model('User');
+const getAuthor = (req, res, callback) => {
+    if (req.payload && req.payload.email) {
+        User
+            .findOne({
+                email: req.payload.email
+            })
+            .exec((err, user) => {
+                if (!user) {
+                    return res
+                        .status(404)
+                        .json({
+                            "message": "User not found"
+                        });
+                } else if (err) {
+                    console.log(err);
+                    return res
+                        .status(404)
+                        .json(err);
+                }
+                callback(req, res, user.name);
+            });
+    } else {
+        return res
+            .status(404)
+            .json({
+                "message": "User not found"
+            });
+    }
+};
+
+
 const doSetAverageRating = (location) => {
     if (location.reviews && location.reviews.length > 0) {
         const count = location.reviews.length;
@@ -30,19 +62,13 @@ const updateAverageRating = (locationId) => {
         });
 };
 
-const doAddReview = (req, res, location) => {
+const doAddReview = (req, res, location, author) => {
     if (!location) {
         res
             .status(404)
-            .json({
-                "message": "Location not found"
-            });
+            .json({ "message": "Location not found" });
     } else {
-        const {
-            author,
-            rating,
-            reviewText
-        } = req.body;
+        const { rating, reviewText } = req.body;
         location.reviews.push({
             author,
             rating,
@@ -62,28 +88,30 @@ const doAddReview = (req, res, location) => {
     }
 }
 
-
 const reviewsCreate = (req, res) => {
-    const locationId = req.params.locationid;
-    if (locationId) {
-        Loc
-            .findById(locationId)
-            .select('reviews')
-            .exec((err, location) => {
-                if (err) {
-                    res.status(400)
-                    json(err);
-                } else {
-                    doAddReview(req, res, location);
-                }
-            });
-    } else {
-        res.status(404)
-            .json({
-                "message": "Location not found - 2017265104 JaeYoung Jang"
-            })
-    }
-
+    getAuthor(req, res,
+        (req, res, userName) => {
+            const locationId = req.params.locationid;
+            if (locationId) {
+                Loc
+                    .findById(locationId)
+                    .select('reviews')
+                    .exec((err, location) => {
+                        if (err) {
+                            res
+                                .status(400)
+                                .json(err);
+                        } else {
+                            doAddReview(req, res, location, userName);
+                        }
+                    });
+            } else {
+                res.status(404)
+                    .json({
+                        "message": "Location not found - 2017265104 JaeYoung Jang"
+                    })
+            }
+        })
 };
 
 const reviewsReadOne = (req, res) => {
@@ -136,7 +164,8 @@ const reviewsUpdateOne = (req, res) => {
             .status(404)
             .json({
                 "message": "Not found, locationid and reviewid are both required"
-            });``
+            });
+        ``
     }
     Loc
         .findById(req.params.locationid)
