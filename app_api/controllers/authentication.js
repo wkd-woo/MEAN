@@ -15,7 +15,7 @@ const register = (req, res) => {
     user.save((err) => {
         if (err) {
             res
-                .setStatus(404)
+                .status(404)
                 .json(err);
         } else {
             const token = user.generateJwt();
@@ -29,8 +29,8 @@ const register = (req, res) => {
 const login = (req, res) => {
     if (!req.body.email || !req.body.password) {
         return res
-            .status(400)
-            .json({ "message": "All fields requirde" });
+            .status($00)
+            .json({ "message": "All fields required" });
     }
     passport.authenticate('local', (err, user, info) => {
         let token;
@@ -39,7 +39,7 @@ const login = (req, res) => {
                 .status(404)
                 .json(err);
         }
-        if (err) {
+        if (user) {
             token = user.generateJwt();
             res
                 .status(200)

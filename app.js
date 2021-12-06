@@ -23,7 +23,9 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_public')));
@@ -50,7 +52,9 @@ app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
         res
             .status(401)
-            .json({ "message": err.name + ": " + err.message });
+            .json({
+                "message": err.name + ": " + err.message
+            });
     }
 });
 
