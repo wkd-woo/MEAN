@@ -53,6 +53,6 @@ const login = (req, res) => {
 };
 
 module.exports = {
-    register
+    register,
     login
 };
