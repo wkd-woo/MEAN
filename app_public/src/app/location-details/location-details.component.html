@@ -16,9 +16,9 @@
             <div class="card-block">
                 <h2 class="card-title">Facilities</h2>
                 <span *ngFor="let facility of location.facilities" class="badge badge-warning">
-                    <i class="fa fa-check"></i>
-                    {{facility}}
-                </span>
+          <i class="fa fa-check"></i>
+          {{facility}}
+        </span>
             </div>
         </div>
     </div>
@@ -35,8 +35,9 @@
 <div class="row">
     <div class="col-12">
         <div class="card card-primary review-card">
-            <div class="card-block">
-                <button (click)="formVisible=true" class="btn btn-primary float-right">Add review</button>
+            <div class="card-block" [ngSwitch]="isLoggedIn()">
+                <button (click)="formVisible=true" class="btn btn-primary float-right" *ngSwitchCase="true">Add review</button>
+                <a routerLink="/login" class="btn btn-primary float-right" *ngSwitchDefault>Log in to add review</a>
                 <!-- <a href="/location/{{location._id}}/review/new" class="btn btn-primary float-right">Add review</a> -->
                 <h2 class="card-title">Customer reviews</h2>
                 <div *ngIf="formVisible">
@@ -46,22 +47,22 @@
                         <div *ngIf="formError" class="alert alert-danger" role="alert">
                             {{ formError }}
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
                                 <input [(ngModel)]="newReview.author" id="name" name="name" required="required" class="form-control">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group row">
                             <label for="rating" class="col-sm-2 col-form-label">Rating</label>
                             <div class="col-sm-10">
                                 <select [(ngModel)]="newReview.rating" id="rating" name="rating">
-                                    <option [ngValue]="5">5</option>
-                                    <option [ngValue]="4">4</option>
-                                    <option [ngValue]="3">3</option>
-                                    <option [ngValue]="2">2</option>
-                                    <option [ngValue]="1">1</option>
-                                </select>
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="4">4</option>
+                  <option [ngValue]="3">3</option>
+                  <option [ngValue]="2">2</option>
+                  <option [ngValue]="1">1</option>
+                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -72,7 +73,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary float-right" style="margin-left:15px">Submit review</button>
+                                <button type="submit" class="btn btn-primary float-right" style="margin-left:15px">Submit
+                  review</button>
                                 <button (click)="formVisible=false" type="button" class="btn btn-light float-right">Cancel</button>
                             </div>
                         </div>

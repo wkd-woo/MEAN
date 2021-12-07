@@ -14,7 +14,7 @@ export class AuthenticationService {
   ) {}
 
   public getToken(): string {
-    return this.storage.getItem('loc9r-token');
+    return this.storage.getItem('loc8r-token');
   }
 
   public saveToken(token: string): void {
